@@ -117,8 +117,28 @@ async function main() {
 
   if (!hasChanges) {
     console.log(
-      "✅ Bootstrap complete! Tenant is already properly configured.\n"
+      "✅ Tenant is already properly configured. Writing .env.local...\n"
     )
+    const connection =
+      plan.connection.existing ||
+      (await discoverExistingResources(domain).then(
+        (r) =>
+          r.connections.find(
+            (c) => c.name === "Username-Password-Authentication"
+          ) || {}
+      ))
+    await writeEnvFile(
+      domain,
+      plan.clients.management.existing.client_id,
+      plan.clients.management.existing.client_secret,
+      plan.clients.dashboard.existing.client_id,
+      plan.clients.dashboard.existing.client_secret,
+      plan.resourceServer.existing?.identifier || "",
+      plan.roles.admin.existing?.id || "",
+      plan.roles.member.existing?.id || "",
+      connection.id || ""
+    )
+    console.log("✅ Bootstrap complete!\n")
     process.exit(0)
   }
 

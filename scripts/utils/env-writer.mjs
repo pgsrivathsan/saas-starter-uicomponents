@@ -39,6 +39,7 @@ AUTH0_MANAGEMENT_API_DOMAIN='${domain}'
 
 # My Organization API Configuration
 AUTH0_MYORG_RESOURCE_SERVER_ID='${myOrgResourceServerId}'
+NEXT_PUBLIC_AUTH0_AUDIENCE='${myOrgResourceServerId}'
 
 # Roles
 AUTH0_ADMIN_ROLE_ID='${adminRoleId}'
